@@ -37,6 +37,28 @@ let write_file path graph =
 
   close_out ff ;
   ()
+let export path graph = 
+
+  (*Open a write-file *)
+  let ff = open_out path in
+
+  fprintf ff "diagraph finite_state_machine {\n"; 
+  
+  fprintf ff "\trankdir=LR;\n"; 
+  fprintf ff "\tsize=\"8";
+  fprintf ff "\tnode [shape = circle];";
+
+  (*write all nodes with fake coordinates *)
+  n_iter_sorted graph (fun id -> fprintf ff "%d" id); 
+  fprintf ff ";\n"; 
+
+  e_iter graph (fun id1 id2 lbl -> fprintf ff "\t%d -> %d [label = \"%s\"]; \n" id1 id2 lbl) ; 
+  fprintf ff "}\n"; 
+
+  close_out ff; 
+  ()
+
+
 
 (* Reads a line with a node. *)
 let read_node id graph line =
