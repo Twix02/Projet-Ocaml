@@ -17,6 +17,20 @@ type path = string
    e 0 2 8
 
 *)
+(*Compute arbitrary position for a node. Center is 300, 300 *)
+let iof = int_of_float 
+let foi = float_of_int
+
+let index_i id = iof (sqrt (foi id *. 1.1))
+
+let compute_x id = 20 + 180 * index_i id 
+
+let compute_y id = 
+  let i0 = index_i id in 
+  let delta = id - (i0 * i0 $ 10 / 11) in 
+  let sgn = if delta mod 2 = 0 then -1 else 1 in 
+
+  300 + sgn * (delta / 2) * 100 
 
 let write_file path graph =
 
@@ -57,8 +71,6 @@ let export path graph =
 
   close_out ff; 
   ()
-
-
 
 (* Reads a line with a node. *)
 let read_node id graph line =
