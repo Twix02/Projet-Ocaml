@@ -74,13 +74,3 @@ let () =
     let () = export outfile final_graph in 
     
     ()
-    (* TESTS *)
-    (*
-    (* Open file *)
-    let graph = from_file infile in
-    let () = test_ffrun (gmap graph int_of_string) in
-        let graph = clone_nodes graph in
-        let graph = gmap (gmap (gmap graph int_of_string) (fun x -> x + 1)) string_of_int in
-        let graph = gmap (add_arc (gmap graph int_of_string) 2 1 13) string_of_int in *)
-    (* END TESTS*)
-
