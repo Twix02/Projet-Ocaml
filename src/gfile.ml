@@ -27,30 +27,13 @@ let compute_x id = 20 + 180 * index_i id
 
 let compute_y id = 
   let i0 = index_i id in 
-  let delta = id - (i0 * i0 $ 10 / 11) in 
+  let delta = id - (i0 * i0 * 10 / 11) in 
   let sgn = if delta mod 2 = 0 then -1 else 1 in 
 
   300 + sgn * (delta / 2) * 100 
-
-let write_file path graph =
-
-  (* Open a write-file. *)
-  let ff = open_out path in
-
-  (* Write in this file. *)
-  fprintf ff "%% This is a graph.\n\n" ;
-
-  (* Write all nodes (with fake coordinates) *)
-  n_iter_sorted graph (fun id -> fprintf ff "n %.1f 1.0\n" (float_of_int id)) ;
-  fprintf ff "\n" ;
-
-  (* Write all arcs *)
-  e_iter graph (fun id1 id2 lbl -> fprintf ff "e %d %d %s\n" id1 id2 lbl) ;
-
-  fprintf ff "\n%% End of graph\n" ;
-
-  close_out ff ;
-  ()
+  
+  
+  
 let export path graph = 
 
   (*Open a write-file *)
@@ -71,6 +54,28 @@ let export path graph =
 
   close_out ff; 
   ()
+  
+
+let write_file path graph =
+
+  (* Open a write-file. *)
+  let ff = open_out path in
+
+  (* Write in this file. *)
+  fprintf ff "%% This is a graph.\n\n" ;
+
+  (* Write all nodes (with fake coordinates) *)
+  n_iter_sorted graph (fun id -> fprintf ff "n %.1f 1.0\n" (float_of_int id)) ;
+  fprintf ff "\n" ;
+
+  (* Write all arcs *)
+  e_iter graph (fun id1 id2 lbl -> fprintf ff "e %d %d %s\n" id1 id2 lbl) ;
+
+  fprintf ff "\n%% End of graph\n" ;
+
+  close_out ff ;
+  ()
+  
 
 (* Reads a line with a node. *)
 let read_node id graph line =
